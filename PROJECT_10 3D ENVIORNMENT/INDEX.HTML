@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Product Showcase with Dot Indicators</title>
+  <link rel="stylesheet" href="STYLE.CSS">
+</head>
+<body>
+
+
+    <div class="background-glow"></div>
+
+    <div class="viewer">
+    <input type="radio" name="view" id="front">
+    <input type="radio" name="view" id="back">
+    <input type="radio" name="view" id="left">
+    <input type="radio" name="view" id="right">
+    <input type="radio" name="view" id="top">
+    <input type="radio" name="view" id="bottom">
+
+    <div class="controls">
+        <label for="front">Front View</label>
+        <label for="back">Back View</label>
+        <label for="left">Left Side</label>
+        <label for="right">Right Side</label>
+        <label for="top">Top Down</label>
+        <label for="bottom">Bottom Up</label>
+    </div>
+
+    <div class="scene">
+        <div class="cube-face front" data-tooltip="Main Product View">
+        Front Perspective
+        <span>Product Image</span>
+        </div>
+
+        <div class="cube-face back" data-tooltip="Technical Specifications">
+        Back Panel
+        <span>Details & Specs</span>
+        </div>
+
+        <div class="cube-face right" data-tooltip="Side Components">
+        Right Side
+        <span>Connection Ports</span>
+        </div>
+
+        <div class="cube-face left" data-tooltip="Feature Highlights">
+        Left Side
+        <span>Control Interface</span>
+        </div>
+
+        <div class="cube-face top" data-tooltip="Top Overview">
+        Top View
+        <span>Cooling System</span>
+        </div>
+
+        <div class="cube-face bottom" data-tooltip="Base Details">
+        Bottom View
+        <span>Mounting Points</span>
+        </div>
+    </div>
+
+    <div class="dot-indicators">
+        <label for="front"></label>
+        <label for="back"></label>
+        <label for="left"></label>
+        <label for="right"></label>
+        <label for="top"></label>
+        <label for="bottom"></label>
+    </div>
+    </div>
+
+</body>
+</html>

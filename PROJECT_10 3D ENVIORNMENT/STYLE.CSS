@@ -1,0 +1,301 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  :root {
+    --primary-color: #ffffff;
+    --accent-color: #7a63ff;
+    --bg-color: #0a0a14;
+  }
+  
+  body {
+    height: 100vh;
+    font-family: "Inter", system-ui, sans-serif;
+    overflow: hidden;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-color);
+    position: relative;
+  }
+  
+  .background-glow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(
+        circle at var(--x, 50%) var(--y, 50%),
+        rgba(255, 255, 255, 0.1),
+        transparent 60%
+      ),
+      radial-gradient(circle at 30% 70%, rgba(122, 99, 255, 0.1), transparent 70%),
+      radial-gradient(
+        circle at 70% 30%,
+        rgba(122, 99, 255, 0.08),
+        transparent 70%
+      );
+    animation: pulse-glow 30s ease-in-out infinite,
+      move-light 30s ease-in-out infinite;
+    filter: blur(40px);
+  }
+  
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      opacity: 0.6;
+    }
+  
+    50% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes move-light {
+    0% {
+      --x: 0%;
+      --y: 50%;
+    }
+  
+    50% {
+      --x: 50%;
+      --y: 100%;
+    }
+  
+    100% {
+      --x: 100%;
+      --y: 0%;
+    }
+  }
+  
+  .viewer {
+    position: relative;
+    perspective: 1600px;
+    text-align: center;
+    z-index: 2;
+  }
+  
+  .controls {
+    margin-bottom: 60px;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .controls label {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+    padding: 12px 24px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  
+  .controls label:hover {
+    background: rgba(var(--primary-color), 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(var(--primary-color), 0.1);
+  }
+  
+  input[type="radio"] {
+    display: none;
+  }
+  
+  .scene {
+    width: 360px;
+    height: 360px;
+    margin: auto;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  
+  .cube-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 60px rgba(var(--primary-color), 0.05),
+      inset 0 0 40px rgba(255, 255, 255, 0.02);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 600;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    transition: all 0.4s ease;
+    overflow: hidden;
+  }
+  
+  .cube-face span {
+    font-size: 1rem;
+    margin-top: 12px;
+    opacity: 0.8;
+    font-weight: 400;
+  }
+  
+  /* Cube face positions */
+  .front {
+    transform: translateZ(180px);
+  }
+  
+  .back {
+    transform: rotateY(180deg) translateZ(180px);
+  }
+  
+  .right {
+    transform: rotateY(90deg) translateZ(180px);
+  }
+  
+  .left {
+    transform: rotateY(-90deg) translateZ(180px);
+  }
+  
+  .top {
+    transform: rotateX(90deg) translateZ(180px);
+  }
+  
+  .bottom {
+    transform: rotateX(-90deg) translateZ(180px);
+  }
+  
+  /* Radio checked states */
+  #front:checked ~ .scene {
+    transform: rotateY(0deg) scale(1);
+  }
+  
+  #back:checked ~ .scene {
+    transform: rotateY(180deg) scale(0.98);
+  }
+  
+  #right:checked ~ .scene {
+    transform: rotateY(-90deg) scale(0.98);
+  }
+  
+  #left:checked ~ .scene {
+    transform: rotateY(90deg) scale(0.98);
+  }
+  
+  #top:checked ~ .scene {
+    transform: rotateX(-90deg) scale(0.98);
+  }
+  
+  #bottom:checked ~ .scene {
+    transform: rotateX(90deg) scale(0.98);
+  }
+  
+  /* Dot Indicators */
+  .dot-indicators {
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: -1;
+  }
+  
+  .dot-indicators label {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+  }
+  
+  .dot-indicators label:hover {
+    transform: scale(1.4);
+    background: var(--primary-color);
+    box-shadow: 0 0 15px rgba(var(--primary-color), 0.4);
+  }
+  
+  #front:checked ~ .controls label[for="front"],
+  #back[type="radio"]:checked ~ .controls label[for="back"],
+  #left[type="radio"]:checked ~ .controls label[for="left"],
+  #right[type="radio"]:checked ~ .controls label[for="right"],
+  #top[type="radio"]:checked ~ .controls label[for="top"],
+  #bottom[type="radio"]:checked ~ .controls label[for="bottom"] {
+    background: rgba(255, 255, 255, 0.9);
+    color: rgba(0, 0, 0);
+    pointer-events: none;
+  }
+  
+  #front:checked ~ .dot-indicators label[for="front"],
+  #back[type="radio"]:checked ~ .dot-indicators label[for="back"],
+  #left[type="radio"]:checked ~ .dot-indicators label[for="left"],
+  #right[type="radio"]:checked ~ .dot-indicators label[for="right"],
+  #top[type="radio"]:checked ~ .dot-indicators label[for="top"],
+  #bottom[type="radio"]:checked ~ .dot-indicators label[for="bottom"] {
+    background: var(--primary-color);
+    transform: scale(1.4);
+    box-shadow: 0 0 20px rgba(var(--primary-color), 0.4);
+  }
+  
+  @keyframes autoRotate {
+    0% {
+      transform: rotateY(0deg) rotateX(0deg);
+    }
+  
+    50% {
+      transform: rotateY(360deg) rotateX(90deg);
+    }
+  
+    100% {
+      transform: rotateY(0deg) rotateX(0deg);
+    }
+  }
+  
+  .scene {
+    animation: autoRotate 30s linear infinite;
+  }
+  
+  #front:checked ~ .scene,
+  #back:checked ~ .scene,
+  #left:checked ~ .scene,
+  #right:checked ~ .scene,
+  #top:checked ~ .scene,
+  #bottom:checked ~ .scene {
+    animation: none !important;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .scene {
+      width: 280px;
+      height: 280px;
+    }
+  
+    .cube-face {
+      font-size: 1.1rem;
+    }
+  
+    .controls label {
+      padding: 10px 18px;
+      font-size: 0.8rem;
+    }
+  
+    .dot-indicators {
+      bottom: -30px;
+    }
+  
+    .dot-indicators label {
+      width: 12px;
+      height: 12px;
+    }
+  }
+  
